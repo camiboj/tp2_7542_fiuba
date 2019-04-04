@@ -1,0 +1,13 @@
+*.o
+//*.zip
+//*.txt
+
+execute.sh
+
+cpplint.py
+filter_options
+
+pruebas/
+
+.vscode/
+
