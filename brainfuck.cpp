@@ -1,93 +1,204 @@
 #include <iostream>
 #include "brainfuck.h"
+#define MAX_LEN_CODE_MEMORY 20000
+#define MAX_LEN_DATA_MEMORY 200
 
-using namespace std;
 
-Brainfuck() {
-    data;
-    code;
+
+Brainfuck::Brainfuck() {
+    this->data_memory.resize(MAX_LEN_DATA_MEMORY);
+    std::fill(this->data_memory.begin(), this->data_memory.end(), 0);  
+    this->data_pos = 0;
+
+    this->code_pos = 0;
 }
 
 //<
-void previous() {
-    data--;
+void Brainfuck::back() {
+    this->data_pos--;
 }
 
 //>
-void next() {
-    data++;
+void Brainfuck::next() {
+    this->data_pos++;
 }
 
 //+
-void plus() {
-    (*data)++;
+void Brainfuck::plus() {
+    this->data_memory[this->data_pos]++;
 }
 
 //-
-void less() {
-    (*data)--;
+void Brainfuck::less() {
+    this->data_memory[this->data_pos]--;
 }
 
 //.
-void out() {
-    std::cout << *data;
+void Brainfuck::out() {
+    std::cout << this->data_memory[this->data_pos];
+
 }
 
 //,
-void in() {
-    std::cin >> *data;
+void Brainfuck::in() {
+    this->data_memory[this->data_pos] = std::cin.get();
+    if (this->data_memory[this->data_pos] == -1) {
+        this->data_memory[this->data_pos] = 0;
+    }
 }
 
 //[
-void loop_start() {
-    int bal = 1;
-    if (*d == '\0') {
-        do {
-            code++;
-            if      (*code == '[') bal++;
-            else if (*code == ']') bal--;
-        } while ( bal != 0 );
-    }
+void Brainfuck::loopStart() {
+    size_t count = 0;
+    bool keep_looking = true;
+    if ( !this->data_memory[this->data_pos] ) {
+        while ( keep_looking ) {
+            this->code_pos++;
+            
+            if ((this->code_pos < 90) & (this->data_pos > -4)) {
+                /*
+                cout << "- ACA   --\n";
+                cout << "POS: " << this->code_pos; 
+                cout << "\n";
+                cout << "INSTRUC: " << this->code_memory[this->code_pos];
+                cout << "\n";
+                cout << "count: " << count;
+                cout << "\n";
+                */
+            }
+            
+            if (this->code_memory.compare(this->code_pos, 1,"[") == 0) {
+                count++;
+            }
+            if (this->code_memory.compare(this->code_pos, 1,"]") == 0) {
+                if (count == 0) {
+                    keep_looking = false;
+                }
+                else {
+                    count--;
+                }
+            }
+
+        }    
+        //this->code_pos++;
+    }     
 }
 
 //]
-void loop_end() {
-    int bal = 0;
-    do {
-    if (*code == '[') bal++;
-    else if (*code == ']') bal--;
-    code--;
-    } while ( bal != 0 );
+void Brainfuck::loopEnd() {
+    size_t count = 0;
+    bool keep_looking = true;
+    
+    while (keep_looking) {
+        this->code_pos--;
+        if (this->code_memory.compare(this->code_pos, 1,"]") == 0) {
+            count++;
+            /*
+            cout << "--   ACA   --\n";
+            cout << "POS: " << this->code_pos; 
+            cout << "\n";
+            cout << "INSTRUC: " << this->code_memory[this->code_pos];
+            cout << "\n";
+            
+            cout << "count: " << count;
+            cout << "\n";
+        */
+        }
+        if (this->code_memory.compare(this->code_pos, 1,"[") == 0) {
+            
+            if (count == 0) {
+                keep_looking = false;
+            }
+            else {
+                count--;
+            }
+        }
+    }
+    this->code_pos--;
+
 }
 
-void evaluate() {
-    while (*code) {
-        switch (*code) {
+void Brainfuck::ex() {
+    while ( this->code_memory[this->code_pos] ) {
+        /*
+        if ((this->code_pos < 90) & (this->data_pos >= 0)) {
+        cout << "--   ITERO   -- \n";
+        cout << "" << this->code_memory[this->code_pos];
+        cout << "\n";
+        }   else break;
+        */
+        switch ( this->code_memory[this->code_pos] ) {
             case '<':
-                previous();
+                this->back();
                 break;
             case '>':
-                next();
+                this->next();
                 break;
             case '+':
-                plus();
+                this->plus();
                 break;
             case '-':
-                less();
+                this->less();
                 break;
             case '.':
-                out();
+                this->out();
                 break;
             case ',':
-                in();
+                this->in();
                 break;
             case '[':
-                loop_start();
+                /*
+                cout << "pos instuccion actual: " << this->code_pos; 
+                cout << "\n";
+                cout << "pos dato ctual: " << this->data_pos;
+                cout << "\n";
+                cout << "dato actual: " << this->data_memory[this->data_pos];
+                cout << "\n";
+                */
+                this->loopStart();
+
                 break;
             case ']':
-                loop_end();
+                /*
+                cout << "pos instuccion actual: " << this->code_pos; 
+                cout << "\n";
+                cout << "pos dato ctual: " << this->data_pos;
+                cout << "\n";
+                cout << "dato actual: " << this->data_memory[this->data_pos];
+                cout << "\n";
+                */
+                this-> loopEnd();
                 break;
         }
-    code++;
+        this->code_pos++;
+    /*
+        if ((this->code_pos < 90) & (this->data_pos > -4)) {
+            cout << "prox_instruc: " << this->code_pos; 
+            cout << "\n";
+            cout << "prox_instruc: " << this->code_memory[this->code_pos];
+            cout << "\n";
+            cout << "DATA_POS: " << this->data_pos; 
+            cout << "\n";
+            cout << "DATA: " << this->data_memory[this->data_pos];
+            cout << "\n";
+        }
+    */
     }
+    /*
+    for (std::vector<char>::const_iterator i = this->data_memory.begin(); i != this->data_memory.end(); ++i)
+    std::cout << *i << ' ';
+    cout << "\n";
+    */
+}
+
+Brainfuck::~Brainfuck() {
+    //delete this->data_memory;
+    //delete this->code_memory;
+}
+
+
+void Brainfuck::setCode(std::string str) {
+    //cout << str;
+    //cout << "\n";
+    this->code_memory.append(str);
 }

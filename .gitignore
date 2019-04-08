@@ -11,3 +11,7 @@ pruebas/
 
 .vscode/
 
+execute_valgrind_and_verify_result_code.sh
+suppressions.txt
+
+tp
