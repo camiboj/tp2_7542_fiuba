@@ -1,0 +1,10 @@
+[SERCOM] Summary
+[SERCOM] Command Line: /usr/bin/valgrind --tool=memcheck --trace-children=yes --track-fds=yes --time-stamp=yes --num-callers=20 --error-exitcode=42 --leak-check=full --leak-resolution=med --log-file=valgrind.out --show-reachable=yes --suppressions=suppressions.txt
+[SERCOM] Error code configured for Valgrind: 42.
+[SERCOM] Valgrind execution result: 1.
+[SERCOM] Valgrind result: Success.
+[SERCOM] Summary
+[SERCOM] Command Line: /usr/bin/valgrind --tool=memcheck --trace-children=yes --track-fds=yes --time-stamp=yes --num-callers=20 --error-exitcode=42 --leak-check=full --leak-resolution=med --log-file=valgrind.out --show-reachable=yes --suppressions=suppressions.txt
+[SERCOM] Error code configured for Valgrind: 42.
+[SERCOM] Valgrind execution result: 1.
+[SERCOM] Valgrind result: Success.
