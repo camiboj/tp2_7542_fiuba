@@ -4,10 +4,10 @@
 #define MAX_LEN_CODE_MEMORY 20000
 #define MAX_LEN_DATA_MEMORY 200
 
-
-Excecutor::Excecutor(std::string& str, std::istream* _in, std::ostream* _out) {
-    //std::cout << "EL CODIGO DEL BF DEBERIA SER: " << '\n';
-    //std::cout << str << '\n';
+//&std::cin, &std::cout
+Executor::Executor(std::string& str) {
+    this->in = std::string("");
+    this->out = std::string("");
     this->data_memory.resize(MAX_LEN_DATA_MEMORY);
     this->code_memory = str;   
     std::fill(this->data_memory.begin(), this->data_memory.end(), 0);  
@@ -15,48 +15,59 @@ Excecutor::Excecutor(std::string& str, std::istream* _in, std::ostream* _out) {
     this->data_pos = 0;
     this->code_pos = 0;
 
-    this->in = _in;
-    this->out = _out;
-    //std::cout << "EL CODIGO DEL BF ES: " << '\n';
-    //std::cout << this->code_memory << '\n';
+    //this->in = std::cin;
+    //this->out = std::cout;
+}
+
+Executor::Executor(std::string& str, std::string& _in, std::string& _out):\
+     in(_in), out(_out) {
+    this->data_memory.resize(MAX_LEN_DATA_MEMORY);
+    this->code_memory = str;   
+    std::fill(this->data_memory.begin(), this->data_memory.end(), 0);  
+    
+    this->data_pos = 0;
+    this->code_pos = 0;
 }
 
 //<
-void Excecutor::back() {
+void Executor::back() {
     this->data_pos--;
 }
 
 //>
-void Excecutor::next() {
+void Executor::next() {
     this->data_pos++;
 }
 
 //+
-void Excecutor::plus() {
+void Executor::plus() {
     this->data_memory[this->data_pos]++;
 }
 
 //-
-void Excecutor::less() {
+void Executor::less() {
     this->data_memory[this->data_pos]--;
 }
 
 //.
-void Excecutor::write() {
-    *this->out << this->data_memory[this->data_pos];
-    //std::cout << "Imprimo " << '\n';
+void Executor::write(std::ostream* file) {
+    //std::cout << "Deberia escribir:";
+    //(&std::cout)->put(this->data_memory[this->data_pos]);
+    //std::cout << '\n';
+    *file << this->data_memory[this->data_pos];
+    //(&std::cout)->put(this->data_memory[this->data_pos]);
 }
 
 //,
-void Excecutor::read() {
-    this->data_memory[this->data_pos] = this->in->get();
+void Executor::read(std::istream* file) {
+    this->data_memory[this->data_pos] = file->get();
     if (this->data_memory[this->data_pos] == -1) {
         this->data_memory[this->data_pos] = 0;
     }
 }
 
 //[
-void Excecutor::loopStart() {
+void Executor::loopStart() {
     size_t count = 0;
     bool keep_looking = true;
     if ( this->data_memory[this->data_pos] ) return;
@@ -77,7 +88,7 @@ void Excecutor::loopStart() {
 
 
 //]
-void Excecutor::loopEnd() {
+void Executor::loopEnd() {
     size_t count = 0;
     bool keep_looking = true;
     
@@ -96,15 +107,28 @@ void Excecutor::loopEnd() {
     }
     this->code_pos--;
 }
-void Excecutor::print_code() {
+void Executor::print_code() {
     std::cout << this->code_memory << '\n';
 }
 
-void Excecutor::start() {
+void Executor::start() {
+    std::istream* in_file = &std::cin;
+    std::ostream* out_file = &std::cout;
+    std::ofstream _out_file;
+    std::ifstream _in_file;
+    
+    if (this->in.compare("") != 0 && 
+        this->out.compare("") != 0) {
+        _in_file.open(this->in);
+        _out_file.open(this->out, 
+                            std::ofstream::out | std::ofstream::trunc);
+        in_file = &_in_file;
+        out_file = &_out_file;
+    }
+    
     //std::cout << "EL CODIGO DEL BF ES: " << '\n';
     //std::cout << this->code_memory << '\n';
     while ( this->code_memory[this->code_pos] ) {
-        
         switch ( this->code_memory[this->code_pos] ) {
             case '<':
                 this->back();
@@ -119,10 +143,10 @@ void Excecutor::start() {
                 this->less();
                 break;
             case '.':
-                this->write();
+                this->write(out_file);
                 break;
             case ',':
-                this->read();
+                this->read(in_file);
                 break;
             case '[':
                 this->loopStart();
@@ -135,7 +159,7 @@ void Excecutor::start() {
     }
 }
 
-Excecutor::~Excecutor() {
+Executor::~Executor() {
     //do nothing
 }
 

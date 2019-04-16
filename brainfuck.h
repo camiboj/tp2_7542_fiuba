@@ -6,16 +6,14 @@
 
 class Brainfuck {
     private:
-    Compiler compiler;
-    Excecutor excecutor;
+        Compiler compiler;
+        Executor executor;
 
     public:
-    explicit Brainfuck(std::string& str, std::istream* _in, std::ostream* _out);
-    ~Brainfuck();
-    void print_code();
-
-    bool start();
+        Brainfuck(std::string& str, std::string& _in, std::string& _out);
+        explicit Brainfuck(std::string& str);
+        ~Brainfuck();
+        bool start();
 };
-
 
 #endif

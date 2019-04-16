@@ -10,13 +10,9 @@ class Interprete: public Modo {
         bool readCode();
 
     public:
-        Interprete(std::string _filename);
+        explicit Interprete(std::string _filename);
         ~Interprete();
         int execute();
 };
-
-
-
-
 
 #endif

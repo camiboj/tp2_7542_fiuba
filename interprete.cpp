@@ -1,4 +1,5 @@
 #include <sstream>
+#include <string>
 #include "interprete.h"
 #include "brainfuck.h"
     
@@ -11,13 +12,14 @@ bool Interprete::readCode() {
     std::ifstream script;
     script.open(this->filename);
     if ( !script.good() ) {
+        //std::cout << "holaaa-aa\n";
         return false;
     }
-       
     //leo el archivo y guardo en "code"
     std::stringstream buffer;
     buffer << script.rdbuf();
     this->code = buffer.str();
+    //std::cout << this->code << "\n";
     script.close();
     return true;
 }
@@ -30,7 +32,7 @@ int Interprete::execute() {
         return COMAND_ERROR;
     }
 
-    Brainfuck bf(this->code, &std::cin, &std::cout);
+    Brainfuck bf(this->code);
     is_all_ok = bf.start();
     if (!is_all_ok) {
         return CODE_ERROR;
@@ -38,6 +40,4 @@ int Interprete::execute() {
     return OK;
 }
 
-Interprete::~Interprete() {
-
-}
+Interprete::~Interprete() {}

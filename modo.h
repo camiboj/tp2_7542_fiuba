@@ -6,13 +6,9 @@
 #define OK 0
 
 class Modo {
-    protected:
-
     public:
     //Modo();
     int excecute();
 };
-
-
 
 #endif
