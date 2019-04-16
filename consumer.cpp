@@ -16,7 +16,6 @@ Consumer::Consumer(bool& _result, std::mutex& _m, std::priority_queue \
 void Consumer::run() {
     std::unique_lock<std::mutex> lock(this->m);
     BfPriority* bf;
-    //int j = 0;
     while (true) {
         while (!this->notified) {  // loop to avoid spurious wakeups
             if (this->done) break; //to evoid neverending wait

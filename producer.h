@@ -7,11 +7,14 @@
 class Producer: public Modo {
     private:
         int n;
-        //bool compare(BfPriority* a, BfPriority* b);
 
     public:
         explicit Producer(int cant);
         ~Producer();
+        //Lee de entrada estandar los parámetros para la creación de branfucks
+        //los agrega a una cola de prioridad bloqueante, para que los
+        //n threads del pool (Consumidores) los ejecuten 
+        //tomando siempre el más prioritario.
         int execute();
 };
 

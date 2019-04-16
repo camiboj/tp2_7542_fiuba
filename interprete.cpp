@@ -12,14 +12,12 @@ bool Interprete::readCode() {
     std::ifstream script;
     script.open(this->filename);
     if ( !script.good() ) {
-        //std::cout << "holaaa-aa\n";
         return false;
     }
     //leo el archivo y guardo en "code"
     std::stringstream buffer;
     buffer << script.rdbuf();
     this->code = buffer.str();
-    //std::cout << this->code << "\n";
     script.close();
     return true;
 }

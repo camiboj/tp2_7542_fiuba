@@ -9,15 +9,7 @@ BfPriority::BfPriority(std::string& str,std::string& _in,\
 bool BfPriority::start(){
     return this->bf.start();
 }
-/*
-bool BfPriority::compare(BfPriority* other) {
-    return other->compare(this->i)
-}
 
-bool BfPriority::compare(int j) {
-    return j < this->i;
-}
-*/
 bool BfPriority::operator<(BfPriority& other) {
     std::cout << this->priority << "<" << other.priority;
     bool aux = this->priority < other.priority;
@@ -31,10 +23,6 @@ bool BfPriority::operator<(BfPriority& other) {
 
 int BfPriority::getPriority() const {
     return this->priority;
-}
-
-void BfPriority::print_priority() {
-    std::cout << "Mi prioridad es: " << this->priority << "\n";
 }
 
 BfPriority::~BfPriority() {}

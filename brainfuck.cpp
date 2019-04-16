@@ -17,7 +17,7 @@ Brainfuck::Brainfuck(std::string& str, std::string& _in, std::string& _out):
         //excecutor.print_code();
     }
 
-bool Brainfuck::start(){
+bool Brainfuck::start() {
     bool is_all_ok = true;
     //std::cout << "ANTES DE COMPILAR: " << '\n';
     //excecutor.print_code();

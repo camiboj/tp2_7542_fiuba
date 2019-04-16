@@ -27,7 +27,6 @@ int Producer::execute() {
     
 
     for (int i = 0; i < this->n; i++) {
-        //std::cerr << "i es: " << i;
         Thread* consumer = new Consumer(result, m, produced_bfs, \
                                         done, notified, cond_var, i);
         consumer->start();
@@ -50,7 +49,7 @@ int Producer::execute() {
             break;
         }
     }
-    done = true; //YA hice todo de todo(por si no habia nadie esperando)
+    done = true; //YA hice todo de todo (por si no habia nadie esperando)
     notified = true;
     cond_var.notify_all();
 
@@ -58,7 +57,6 @@ int Producer::execute() {
         threads[i]->join();
         delete threads[i];
     }
-    //consumer.join();
     return state;
 }
 

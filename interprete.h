@@ -10,8 +10,11 @@ class Interprete: public Modo {
         bool readCode();
 
     public:
+        //recibe el nombre de un archivo que contiene un código brainfuck
         explicit Interprete(std::string _filename);
         ~Interprete();
+        //intérprete de brainfuck ​ 
+        //que deberá ejecutar scripts del mencionado lenguaje.
         int execute();
 };
 

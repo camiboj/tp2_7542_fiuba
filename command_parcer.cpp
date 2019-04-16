@@ -10,7 +10,6 @@ CommandParcer::CommandParcer(std::string& line) {
     std::vector<std::string> container;
 	std::string buff{""};
 	int i = 0;
-    //std::cerr << "line en parcer: " << line << "\n";
     while ( line[i] ) { 
 		if(line[i] == ',' && line[i+1] == ' ' && buff != "") { 
             container.push_back(buff); buff = ""; 
@@ -26,7 +25,6 @@ CommandParcer::CommandParcer(std::string& line) {
     this->out_filename = container[3];
 
     container[0][0] = ' ';
-    //std::cout << "Programa a ejecutar:" << container[0] << "\n";
     
     this->code = container[4];
     this->priority= std::atoi(container[1].c_str());

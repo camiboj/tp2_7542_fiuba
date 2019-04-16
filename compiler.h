@@ -1,18 +1,18 @@
 #ifndef COMPILER_H_
 #define COMPILER_H_
-#include <stack> 
 #include <string>
 
 class Compiler {
     private:
     std::string code;
-    std::stack<char> my_stack;
 
     public:
+    //Recibe un código brainfuck
     explicit Compiler(std::string& str);
 
     ~Compiler();
-    
+    //Parcea el cógigo brainfuck y verifica el correcto uso
+    //de los corcetes ('[' y ']')
     bool start();
 };
 

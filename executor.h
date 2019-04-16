@@ -45,7 +45,8 @@ class Executor {
         explicit Executor(std::string& str);
         Executor(std::string& str, std::string& _in, std::string& _out);
         ~Executor();
-        //void setCode(std::string str);
+        //Abre los archivos de entrada y salida en caso de no ser los estandars
+        //Y ejecuta el código bf.
         void start();
 };
 

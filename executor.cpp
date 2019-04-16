@@ -51,11 +51,7 @@ void Executor::less() {
 
 //.
 void Executor::write(std::ostream* file) {
-    //std::cout << "Deberia escribir:";
-    //(&std::cout)->put(this->data_memory[this->data_pos]);
-    //std::cout << '\n';
     *file << this->data_memory[this->data_pos];
-    //(&std::cout)->put(this->data_memory[this->data_pos]);
 }
 
 //,
@@ -126,8 +122,6 @@ void Executor::start() {
         out_file = &_out_file;
     }
     
-    //std::cout << "EL CODIGO DEL BF ES: " << '\n';
-    //std::cout << this->code_memory << '\n';
     while ( this->code_memory[this->code_pos] ) {
         switch ( this->code_memory[this->code_pos] ) {
             case '<':

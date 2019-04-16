@@ -20,6 +20,7 @@ class CompareBf {
         }
 };
 
+
 class Consumer : public Thread { 
     private:
         bool& result; 
@@ -33,12 +34,19 @@ class Consumer : public Thread {
         int i;
     
     public:
+        //Recibe una cola bloqueante 
+        //para ejecutar siempre el bf de mayor prioridad
         Consumer(bool& _result, std::mutex& _m, std::priority_queue \
                     <BfPriority*, std::vector <BfPriority*>, CompareBf> \
                     & _produced_bfs, \
                      bool& _done, bool& _notified,  \
                      std::condition_variable& _cond_var, int _i);
+        
+        //Espera la notificación de que hay brainfucks para ejecutar
+        //y los ejecuta.
         virtual void run() override;
 };
+
+
 
 #endif
