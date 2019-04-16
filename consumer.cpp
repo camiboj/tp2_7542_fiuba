@@ -22,16 +22,17 @@ void Consumer::run() {
             if (this->done) break; //to evoid neverending wait
             this->cond_var.wait(lock);
         }
-
+        notified = false;
         if (this->done && produced_bfs.empty()) break; //same shit
 
         bf = this->produced_bfs.top();
         this->produced_bfs.pop(); 
         
-        //lock.unlock();  
-        
+        //libero el mutex pa que otros hilos puedan seguir desencolando
+        lock.unlock();  
         this->result = bf->start();
         delete bf;
-        notified = false;
+        //lo bloqueo porque wait lo desbloquea
+        lock.lock();
     }       
 }
